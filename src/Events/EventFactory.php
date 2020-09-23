@@ -44,6 +44,7 @@ class EventFactory
                 if (!isset($decodedBody['event_payload'])) {
                     throw new EventInvalidException('Event payload is missing');
                 }
+                $event->setPayload($decodedBody['event_payload']);
             } catch (JsonException $e) {}
         }
         return $event;
