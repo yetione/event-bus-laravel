@@ -4,17 +4,13 @@
 namespace Yetione\EventBus\Consumers;
 
 
-use PhpAmqpLib\Wire\AMQPAbstractCollection;
-use Yetione\EventBus\Event;
 use Yetione\EventBus\Events\EventFactory;
+use Yetione\EventBus\Exceptions\EventInvalidException;
 use Yetione\EventBus\Exceptions\ListenerException;
 use Yetione\EventBus\Listeners\ListenerContact;
 use PhpAmqpLib\Message\AMQPMessage;
-use Yetione\Json\Exceptions\JsonException;
-use Yetione\Json\Json;
 use Yetione\RabbitMQ\Consumer\BasicConsumeConsumer;
 use Yetione\RabbitMQ\DTO\Queue;
-use Yetione\RabbitMQ\Exception\StopConsumerException;
 
 class EventConsumer extends BasicConsumeConsumer
 {
@@ -26,6 +22,7 @@ class EventConsumer extends BasicConsumeConsumer
      * @param AMQPMessage $message
      * @return int
      * @throws ListenerException
+     * @throws EventInvalidException
      */
     protected function processMessage(AMQPMessage $message): int
     {
