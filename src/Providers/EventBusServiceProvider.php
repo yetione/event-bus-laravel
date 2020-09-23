@@ -19,6 +19,7 @@ class EventBusServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/../../config/event-bus.php', 'event-bus');
         $this->app->singleton(SingleEventProducer::class, static function(Application $app): ProducerInterface {
             /** @var ProducerFactory $producerFactory */
             $producerFactory = $app->make(ProducerFactory::class);
@@ -28,6 +29,9 @@ class EventBusServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->publishes([
+            __DIR__.'/../../config/event-bus.php' => config_path('event-bus.php'),
+        ], 'event-bus');
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Install::class,
