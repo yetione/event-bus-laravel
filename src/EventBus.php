@@ -32,7 +32,17 @@ class EventBus
 
     public function dispatch(EventContract $event)
     {
-        $message = $this->producer->getMessageFactory()->fromArray(['event_payload'=>$event->payload()], $event->params(), ['event_name'=>$event->name()]);
+        $message = $this->producer->getMessageFactory()
+            ->fromArray(
+                [
+                    'event_payload'=>$event->payload()
+                ],
+                $event->params(),
+                [
+                    'event_name'=>$event->name(),
+                    'x-event_scope'=>$event->scope(),
+                    'x-event_source'=>$event->source()
+                ]);
         $routingKey = $this->buildRoutingKey($event);
         $this->producer->publish($message, $routingKey);
     }

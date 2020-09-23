@@ -18,6 +18,11 @@ class Event implements EventContract
 
     protected array $payload;
 
+    public function __construct()
+    {
+        $this->params['content_type'] = 'application/json';
+    }
+
     public function setPayload(array $payload): EventContract
     {
         $this->payload = $payload;

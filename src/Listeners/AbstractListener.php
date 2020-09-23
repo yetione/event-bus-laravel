@@ -4,12 +4,14 @@
 namespace Yetione\EventBus\Listeners;
 
 
+use Yetione\EventBus\Event;
 use Yetione\EventBus\Exceptions\EventNameMissingException;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPAbstractCollection;
 
 abstract class AbstractListener implements ListenerContact
 {
+    protected Event $event;
     /**
      * @param AMQPMessage $message
      * @return string
@@ -23,5 +25,21 @@ abstract class AbstractListener implements ListenerContact
             }
         }
         throw new EventNameMissingException('Event name is missing');
+    }
+
+    public function getEvent(): Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(Event $event): ListenerContact
+    {
+        $this->event = $event;
+        return $this;
+    }
+
+    public function reset(): void
+    {
+        unset($this->event);
     }
 }

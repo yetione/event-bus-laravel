@@ -9,6 +9,7 @@ use Yetione\EventBus\Console\EventScope;
 use Yetione\EventBus\Console\EventSource;
 use Yetione\EventBus\Console\Install;
 use Yetione\EventBus\Console\RunConsumer;
+use Yetione\EventBus\Events\EventFactory;
 use Yetione\EventBus\Producers\SingleEventProducer;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +26,7 @@ class EventBusServiceProvider extends ServiceProvider
             $producerFactory = $app->make(ProducerFactory::class);
             return $producerFactory->make(config('event-bus.producer'));
         });
+        $this->app->singleton(EventFactory::class);
     }
 
     public function boot()
