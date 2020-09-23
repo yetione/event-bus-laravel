@@ -1,0 +1,50 @@
+{
+    "name": "yetione/event-bus-laravel",
+    "description": "Laravel event bus module",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "yeti",
+            "email": "jub45@yandex.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": { "Yetione\\EventBus\\": "src/"}
+    },
+    "require": {
+        "yetione/rabbitmq-laravel-adapter": "@dev",
+        "illuminate/console": "^7"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../rabbitmq-laravel-adapter",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "../rabbitmq-module",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "../dtoable",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "../dtoable-laravel-adapter",
+            "options": {
+                "symlink": false
+            }
+        }
+    ]
+}
