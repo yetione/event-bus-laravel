@@ -4,7 +4,6 @@
 namespace Yetione\EventBus;
 
 use Yetione\EventBus\Contracts\EventContract;
-use InvalidArgumentException;
 
 class Event implements EventContract
 {
@@ -14,14 +13,11 @@ class Event implements EventContract
 
     protected ?string $scope = null;
 
-    protected array $params = [];
+    protected array $params = [
+        'content_type'=>'application/json'
+    ];
 
     protected array $payload;
-
-    public function __construct()
-    {
-        $this->params['content_type'] = 'application/json';
-    }
 
     public function setPayload(array $payload): EventContract
     {
