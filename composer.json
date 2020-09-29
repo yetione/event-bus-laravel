@@ -9,12 +9,12 @@
             "email": "jub45@yandex.ru"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": { "Yetione\\EventBus\\": "src/"}
     },
     "require": {
-        "yetione/rabbitmq-laravel-adapter": "@dev",
+        "yetione/rabbitmq-laravel-adapter": "^1.2",
         "illuminate/console": "^7"
     },
     "extra": {
@@ -23,35 +23,5 @@
                 "Yetione\\EventBus\\Providers\\EventBusServiceProvider"
             ]
         }
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../rabbitmq-laravel-adapter",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "../rabbitmq-module",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "../dtoable",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "../dtoable-laravel-adapter",
-            "options": {
-                "symlink": false
-            }
-        }
-    ]
+    }
 }
