@@ -17,6 +17,13 @@
         "yetione/rabbitmq-laravel-adapter": "@dev",
         "illuminate/console": "^7"
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Yetione\\EventBus\\Providers\\EventBusServiceProvider"
+            ]
+        }
+    },
     "repositories": [
         {
             "type": "path",

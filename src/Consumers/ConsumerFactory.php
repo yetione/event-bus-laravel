@@ -3,6 +3,7 @@
 
 namespace Yetione\EventBus\Consumers;
 
+use Yetione\EventBus\Events\EventFactory;
 use Yetione\EventBus\Exceptions\MakeEventConsumerFailed;
 use Yetione\EventBus\Listeners\ListenerContact;
 use Yetione\EventBus\Services\EventBusService;
@@ -11,12 +12,16 @@ use Illuminate\Contracts\Container\Container;
 use Yetione\RabbitMQ\Consumer\ConsumerFactory as RabbitMQConsumerFactory;
 use Yetione\RabbitMQ\DTO\Queue;
 use Yetione\RabbitMQ\DTO\QueueBinding;
+use Yetione\RabbitMQ\Exception\MakeConnectionFailedException;
+use Yetione\RabbitMQ\Exception\MakeConsumerFailedException;
 
 class ConsumerFactory
 {
     protected RabbitMQConsumerFactory $rabbitMQFactory;
 
     protected EventBusService $eventBusService;
+
+    protected EventFactory $eventFactory;
 
     protected Container $container;
 
@@ -25,16 +30,24 @@ class ConsumerFactory
     public function __construct(
         RabbitMQConsumerFactory $rabbitMQFactory,
         EventBusService $eventBusService,
+        EventFactory $eventFactory,
         Container $container
     )
     {
         $this->consumerName = config('event-bus.listener');
         $this->rabbitMQFactory = $rabbitMQFactory;
         $this->eventBusService = $eventBusService;
+        $this->eventFactory = $eventFactory;
         $this->container = $container;
     }
 
-
+    /**
+     * @param string $name
+     * @return EventConsumer
+     * @throws MakeEventConsumerFailed
+     * @throws MakeConnectionFailedException
+     * @throws MakeConsumerFailedException
+     */
     public function make(string $name): EventConsumer
     {
         if (empty($listenerOptions = config('event-bus.listeners.'.$name))) {
@@ -76,8 +89,10 @@ class ConsumerFactory
         $connection = $consumer->getConnectionWrapper();
         $connection->declareQueue($queue, true);
         $connection->declareQueueBinding($binding);
-        $consumer->setQueue($queue);
-        $consumer->setListener($listener);
+        $consumer
+            ->setQueue($queue)
+            ->setListener($listener)
+            ->setEventFactory($this->eventFactory);
         return $consumer;
 
     }
