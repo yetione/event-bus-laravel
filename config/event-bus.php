@@ -1,5 +1,4 @@
 <?php
-use Yetione\EventBus\Listeners\TestListener;
 
 return [
     'producer'=>'event_bus',
@@ -9,7 +8,7 @@ return [
             'source'=>'auth',
             'scope'=>'users',
             'name'=>'project_created',
-            'listener'=> TestListener::class
+//            'listener'=> TestListener::class
         ],
     ],
 
